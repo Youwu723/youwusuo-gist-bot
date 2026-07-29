@@ -1,0 +1,13 @@
+{
+  "name": "youwusuo-gist-bot",
+  "version": "1.0.0",
+  "description": "釉雾所每日云端选题自动生成器：抓取热榜 + AI改写 + 推送 GitHub Gist",
+  "private": true,
+  "scripts": {
+    "start": "node generate_feed.js",
+    "dry": "DRY_RUN=1 node generate_feed.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
