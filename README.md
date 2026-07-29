@@ -77,4 +77,25 @@ node generate_feed.js
   "hot":    [{ "title": "", "platform": "抖音", "url": "", "heat": "热", "category": "减肥" }],
   "news":   [{ "title": "", "source": "", "kw": "", "cat": "财经", "summary": "", "time": "今日" }]
 }
+
+---
+
+## 六、开启 AI 真改写（可选）
+
+默认脚本基于「真实热榜 + 内置赛道模板」生成内容（**无需任何 AI key，开箱即用**）。
+想让内容更贴合你的赛道、更接近「真人写」的高质量文案，可接入大模型改写：
+
+1. **获取 Key**：到任意 OpenAI 兼容服务商注册并拿到 API Key
+   （OpenAI、[DeepSeek](https://platform.deepseek.com)、通义千问、智谱等均可）。
+2. **填入仓库 Secrets**：本仓库 `Settings → Secrets and variables → Actions → New repository secret`，
+   添加 `OPENAI_API_KEY`（必填）。可选两项：
+   - `OPENAI_BASE_URL`：自定义接口地址。例如 DeepSeek `https://api.deepseek.com/v1`、
+     通义 `https://dashscope.aliyuncs.com/compatible-mode/v1`。**不填则默认用 OpenAI 官方**。
+   - `OPENAI_MODEL`：模型名，如 `gpt-4o-mini`、`deepseek-chat`、`qwen-max`。
+3. **触发一次**：仓库 → Actions → 选「釉雾所·每日云端选题推送」→ Run workflow。
+   脚本会用**当天真实热榜**让模型改写成 10 条选题 + 10 条二创角度 + 贴合赛道的热点素材，再推送 Gist。
+4. **网页端零改动**：App 读的是 Gist，AI 改写后的内容会自动出现在「热点二创 / 每日新闻」页。
+
+> 费用极低：每天一次、单次约几千 token，多数服务商的免费额度即可长期覆盖。
+> 不填 Key 也完全没问题——脚本走模板 + 真实热榜回落，照样产出合规 JSON。
 ```
