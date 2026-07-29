@@ -1,0 +1,33 @@
+name: 釉雾所·每日云端选题推送
+
+on:
+  schedule:
+    # 每天北京时间 08:00（UTC 00:00）自动运行；可改成你方便的时间
+    - cron: "0 0 * * *"
+  workflow_dispatch: {} # 允许在 GitHub 上手动「Run workflow」
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: 生成并推送 Gist
+        env:
+          GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+          GIST_ID: ${{ secrets.GIST_ID }}
+          GIST_FILENAME: ${{ secrets.GIST_FILENAME || 'feed.json' }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+          OPENAI_MODEL: ${{ secrets.OPENAI_MODEL }}
+        run: node generate_feed.js
