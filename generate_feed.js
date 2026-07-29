@@ -38,7 +38,9 @@ const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-4o-mini";
 const TRACKS = ["减肥", "小说推文", "漫剧", "影视剪辑", "学习成长", "女性成长", "带货"];
 
 function todayKey(d = new Date()) {
-  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  // 统一用北京时间（UTC+8），避免 CI/服务器为 UTC 时区导致日期“慢一天”
+  const bj = new Date(d.getTime() + 8 * 3600 * 1000);
+  return bj.getUTCFullYear() + "-" + String(bj.getUTCMonth() + 1).padStart(2, "0") + "-" + String(bj.getUTCDate()).padStart(2, "0");
 }
 
 async function fetchJSON(url, timeout = 8000) {
